@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Http.HttpResults;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -9,27 +12,6 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 
 //Routing
+app.MapControllers();
 
-// "/shirts"
-app.MapGet("/shirts", () =>
-{
-    return "Reading all the shirts";
-});
-
-app.MapGet("/shirt/{id}", (int id) =>
-{
-    return $"Reading shirt with ID: {id}";
-});
-app.MapPost("/shirts", () =>
-{
-    return "Creating a shirt.";
-});
-app.MapPut("/shirt/{id}", (int id) =>
-{
-    return $"Update shirt with ID: {id}";
-});
-app.MapDelete("/shirt/{id}", (int id) =>
-{
-    return $"Deleting shirt with ID: {id}";
-});
 app.Run();
