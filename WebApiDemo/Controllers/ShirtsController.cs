@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApiDemo.Models;
+using WebApiDemo.Models.Repositories;
 
 namespace WebApiDemo.Controllers
 {
@@ -8,29 +9,38 @@ namespace WebApiDemo.Controllers
     public class ShirtsController : ControllerBase
     {
         [HttpGet]
-        public string GetShirts()
+        public IActionResult GetShirts()
         {
-            return "Reading all the shirts";
+            return Ok("Reading all the shirts");
         }
         [HttpGet("{id}")]
-        public string GetShirtById(int id, [FromQuery] string color)
+        public IActionResult GetShirtById(int id)
         {
-            return $"Reading shirt: {id},color: {color}";
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+            var shirt = ShirtRepository.GetShirtById(id);
+            if (shirt == null)
+            {
+                return NotFound();
+            }
+            return Ok(shirt);
         }
         [HttpPost]
-        public string CreateShirt([FromBody] Shirt shirt)
+        public IActionResult CreateShirt([FromBody] Shirt shirt)
         {
-            return $"Creating a shirt";
+            return Ok($"Creating a shirt");
         }
         [HttpPut("{id}")]
-        public string UpdateShirt(int id)
+        public IActionResult UpdateShirt(int id)
         {
-            return $"Updating shirt: {id}";
+            return Ok($"Updating shirt: {id}");
         }
         [HttpDelete("{id}")]
-        public string DeleteShirt(int id)
+        public IActionResult DeleteShirt(int id)
         {
-            return $"Delete Shirt: {id}";
+            return Ok($"Delete Shirt: {id}");
         }
     }
 }
