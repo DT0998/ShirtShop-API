@@ -1,16 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API.DTOs;
+using API.Models.Shirt.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using WebApiDemo.Models;
-using WebApiDemo.Models.Repositories;
 
-namespace WebApiDemo.Filters.ActionFilters
+namespace API.Filters.ActionFilters
 {
     public class Shirt_ValidateCreateShirtFilterAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
-            var shirt = context.ActionArguments["shirt"] as Shirt;
+            var shirt = context.ActionArguments["shirt"] as ShirtDto;
             if (shirt == null)
             {
                 context.ModelState.AddModelError("Shirt", "Shirt object is null");

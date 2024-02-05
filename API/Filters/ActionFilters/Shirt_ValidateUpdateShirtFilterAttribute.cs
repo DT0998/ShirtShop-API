@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API.DTOs;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using WebApiDemo.Models;
 
-namespace WebApiDemo.Filters.ActionFilters
+namespace API.Filters.ActionFilters
 {
     public class Shirt_ValidateUpdateShirtFilterAttribute : ActionFilterAttribute
     {
@@ -10,7 +10,7 @@ namespace WebApiDemo.Filters.ActionFilters
         {
             base.OnActionExecuting(context);
             var id = context.ActionArguments["id"] as int?;
-            var shirt = context.ActionArguments["shirt"] as Shirt;
+            var shirt = context.ActionArguments["shirt"] as ShirtDto;
 
             if (id.HasValue && shirt != null && id != shirt.Id)
             {

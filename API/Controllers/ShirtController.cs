@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebApiDemo.Filters.ActionFilters;
-using WebApiDemo.Filters.ExceptionFilters;
-using WebApiDemo.Models;
-using WebApiDemo.Models.Repositories;
+﻿using API.DTOs;
+using API.Filters.ActionFilters;
+using API.Filters.ExceptionFilters;
+using API.Models.Shirt.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
-namespace WebApiDemo.Controllers
+namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ShirtsController : ControllerBase
+    public class ShirtController : ControllerBase
     {
         [HttpGet]
         public IActionResult GetShirts()
@@ -23,7 +23,7 @@ namespace WebApiDemo.Controllers
         }
         [HttpPost]
         [Shirt_ValidateCreateShirtFilter]
-        public IActionResult CreateShirt([FromBody] Shirt shirt)
+        public IActionResult CreateShirt([FromBody] ShirtDto shirt)
         {
             ShirtRepository.AddShirt(shirt);
 
@@ -33,7 +33,7 @@ namespace WebApiDemo.Controllers
         [Shirt_ValidateShirtIdFilter]
         [Shirt_ValidateUpdateShirtFilter]
         [Shirt_HandleUpdateExceptionsFilter]
-        public IActionResult UpdateShirt(int id, Shirt shirt)
+        public IActionResult UpdateShirt(int id, ShirtDto shirt)
         {
             ShirtRepository.UpdateShirt(shirt);
             return NoContent();
